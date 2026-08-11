@@ -2,521 +2,261 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Star Games</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    -webkit-tap-highlight-color:transparent;
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-    background:#070a11;
-    color:#fff;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:#080b12;
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  min-height:100vh;
 }
-
-button{
-    font-family:inherit;
-}
-
-.app{
-    max-width:520px;
-    margin:auto;
-    padding-bottom:90px;
-}
-
-/* HEADER */
+button{font-family:inherit;cursor:pointer}
+.app{max-width:520px;margin:auto;padding-bottom:90px}
 
 .header{
-    height:65px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 17px;
+  height:64px;padding:0 16px;
+  display:flex;align-items:center;justify-content:space-between
 }
-
-.logo{
-    font-size:22px;
-    font-weight:900;
-}
-
-.logo span{
-    color:#ffd43b;
-}
-
+.logo{font-size:22px;font-weight:900}
+.logo span{color:#ffd43b}
 .avatar{
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    background:#202838;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:20px;
+  width:40px;height:40px;border-radius:50%;
+  background:#202838;display:flex;align-items:center;justify-content:center
 }
-
-/* BALANCE */
 
 .balance{
-    margin:4px 15px 16px;
-    padding:20px;
-    border-radius:23px;
-    background:linear-gradient(145deg,#181f2d,#10151f);
-    border:1px solid #252e3e;
+  margin:5px 15px 15px;padding:18px 20px;
+  border-radius:22px;background:linear-gradient(145deg,#191f2d,#10151e);
+  border:1px solid #293244
 }
-
-.balance-label{
-    color:#8792a7;
-    font-size:13px;
-}
-
-.balance-value{
-    margin-top:5px;
-    font-size:34px;
-    font-weight:900;
-}
-
-.balance-value span{
-    font-size:25px;
-}
-
-/* NAV CATEGORIES */
+.balance small{color:#8d98aa}
+.balance strong{display:block;font-size:32px;margin-top:4px}
 
 .categories{
-    display:flex;
-    gap:9px;
-    overflow-x:auto;
-    padding:0 15px 12px;
-    scrollbar-width:none;
+  display:flex;gap:8px;overflow-x:auto;padding:0 15px 13px;
+  scrollbar-width:none
 }
-
-.categories::-webkit-scrollbar{
-    display:none;
+.categories::-webkit-scrollbar{display:none}
+.cat{
+  white-space:nowrap;padding:9px 14px;border-radius:13px;
+  background:#141a25;border:1px solid #293244;color:#909bad;font-size:13px
 }
-
-.category{
-    white-space:nowrap;
-    padding:10px 15px;
-    border-radius:13px;
-    background:#131925;
-    border:1px solid #252d3c;
-    color:#929caf;
-    font-size:13px;
-}
-
-.category.active{
-    background:#ffd43b;
-    color:#111;
-    border-color:#ffd43b;
-    font-weight:800;
-}
-
-/* SECTION */
+.cat.active{background:#ffd43b;color:#111;border-color:#ffd43b;font-weight:800}
 
 .section{
-    padding:13px 15px 10px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+  padding:12px 15px 10px;
+  display:flex;justify-content:space-between;align-items:center
 }
-
-.section h2{
-    font-size:20px;
-}
-
-.section a{
-    color:#ffd43b;
-    font-size:13px;
-}
-
-/* HERO */
+.section h2{font-size:20px}
+.section span{color:#ffd43b;font-size:13px}
 
 .hero{
-    margin:0 15px 15px;
-    min-height:155px;
-    padding:20px;
-    border-radius:23px;
-    position:relative;
-    overflow:hidden;
-    background:linear-gradient(135deg,#202b47,#111722);
-    border:1px solid #2c3850;
+  margin:0 15px 15px;padding:20px;min-height:150px;
+  border-radius:23px;background:linear-gradient(135deg,#202c49,#111722);
+  border:1px solid #2d3a52;position:relative;overflow:hidden
 }
-
 .hero:after{
-    content:"🚀";
-    position:absolute;
-    right:20px;
-    bottom:-18px;
-    font-size:105px;
-    opacity:.22;
+  content:"🚀";position:absolute;right:15px;bottom:-20px;
+  font-size:110px;opacity:.2
 }
-
-.hero-small{
-    color:#ffd43b;
-    font-size:12px;
-    font-weight:800;
-    margin-bottom:8px;
+.hero-label{color:#ffd43b;font-size:11px;font-weight:900}
+.hero h1{font-size:28px;margin-top:7px}
+.hero p{color:#919bad;font-size:13px;margin-top:5px}
+.yellow{
+  margin-top:14px;border:0;background:#ffd43b;color:#111;
+  border-radius:13px;padding:11px 17px;font-weight:900
 }
-
-.hero-title{
-    font-size:27px;
-    font-weight:900;
-}
-
-.hero-text{
-    color:#929caf;
-    font-size:13px;
-    margin-top:7px;
-}
-
-.hero-button{
-    margin-top:15px;
-    border:0;
-    background:#ffd43b;
-    color:#111;
-    border-radius:13px;
-    padding:11px 17px;
-    font-weight:900;
-}
-
-/* GAMES GRID */
 
 .games{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:11px;
-    padding:0 15px;
+  display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:0 15px
 }
-
 .game{
-    min-height:155px;
-    border-radius:21px;
-    padding:17px;
-    position:relative;
-    overflow:hidden;
-    border:1px solid #252e3e;
+  min-height:145px;border-radius:21px;padding:16px;
+  border:1px solid #293244;overflow:hidden;position:relative
 }
-
-.game:nth-child(1){
-    background:linear-gradient(145deg,#192b48,#101722);
-}
-
-.game:nth-child(2){
-    background:linear-gradient(145deg,#332218,#17110e);
-}
-
-.game:nth-child(3){
-    background:linear-gradient(145deg,#29203d,#15101e);
-}
-
-.game:nth-child(4){
-    background:linear-gradient(145deg,#17382f,#0f1d19);
-}
-
-.game:nth-child(5){
-    background:linear-gradient(145deg,#39252c,#1a1115);
-}
-
-.game:nth-child(6){
-    background:linear-gradient(145deg,#242b40,#111622);
-}
-
-.game-icon{
-    font-size:39px;
-}
-
-.game-name{
-    margin-top:13px;
-    font-size:17px;
-    font-weight:900;
-}
-
-.game-description{
-    color:#8b96a9;
-    font-size:11px;
-    margin-top:4px;
-}
-
-/* BONUS */
+.game:nth-child(1){background:linear-gradient(145deg,#192d4b,#101722)}
+.game:nth-child(2){background:linear-gradient(145deg,#34231b,#17100d)}
+.game:nth-child(3){background:linear-gradient(145deg,#29203d,#15101e)}
+.game:nth-child(4){background:linear-gradient(145deg,#17382f,#0e1c18)}
+.game:nth-child(5){background:linear-gradient(145deg,#3b2229,#191015)}
+.game:nth-child(6){background:linear-gradient(145deg,#202b43,#111621)}
+.game:nth-child(7){background:linear-gradient(145deg,#32271a,#17130d)}
+.game:nth-child(8){background:linear-gradient(145deg,#1e3440,#101a20)}
+.icon{font-size:38px}
+.game h3{margin-top:10px;font-size:17px}
+.game p{color:#8994a7;font-size:11px;margin-top:4px}
 
 .bonus{
-    margin:18px 15px;
-    padding:18px;
-    border-radius:21px;
-    background:#141a25;
-    border:1px solid #252e3e;
+  margin:18px 15px;padding:17px;border-radius:20px;
+  background:#151b27;border:1px solid #293244;
+  display:flex;align-items:center;justify-content:space-between
 }
+.bonus-title{font-weight:900}
+.bonus-text{color:#8994a7;font-size:12px;margin-top:4px}
 
-.bonus-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+.nav{
+  position:fixed;z-index:30;bottom:0;left:50%;
+  transform:translateX(-50%);width:min(520px,100%);
+  height:72px;background:rgba(10,14,22,.97);
+  border-top:1px solid #293244;display:flex;
+  justify-content:space-around;align-items:center
 }
+.nav-item{text-align:center;color:#697589;font-size:10px}
+.nav-item.active{color:#ffd43b}
+.nav-item div{font-size:22px;margin-bottom:3px}
 
-.bonus-icon{
-    font-size:34px;
+.page{display:none}
+.page.active{display:block}
+
+.list{padding:0 15px}
+.row{
+  background:#151b27;border:1px solid #293244;
+  border-radius:16px;padding:15px;margin-bottom:9px;
+  display:flex;align-items:center
 }
+.row .num{width:32px;color:#ffd43b;font-weight:900}
+.row .name{flex:1;font-weight:800}
+.row .score{color:#ffd43b;font-weight:800}
 
-.bonus-title{
-    font-size:16px;
-    font-weight:900;
+.profile{
+  margin:15px;padding:25px;text-align:center;
+  background:#151b27;border:1px solid #293244;border-radius:22px
 }
-
-.bonus-text{
-    color:#8994a8;
-    font-size:12px;
-    margin-top:4px;
-}
-
-.bonus-button{
-    border:0;
-    border-radius:12px;
-    padding:11px 14px;
-    background:#ffd43b;
-    color:#111;
-    font-weight:900;
-}
-
-/* BOTTOM */
-
-.bottom{
-    position:fixed;
-    bottom:0;
-    left:50%;
-    transform:translateX(-50%);
-    width:min(520px,100%);
-    height:72px;
-    background:rgba(10,14,22,.97);
-    border-top:1px solid #252d3b;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    z-index:5;
-    backdrop-filter:blur(15px);
-}
-
-.bottom-item{
-    text-align:center;
-    color:#697489;
-    font-size:10px;
-}
-
-.bottom-item.active{
-    color:#ffd43b;
-}
-
-.bottom-icon{
-    font-size:22px;
-    margin-bottom:3px;
-}
-
-/* PAGES */
-
-.page{
-    display:none;
-    padding-bottom:20px;
-}
-
-.page.active{
-    display:block;
-}
-
-/* PROFILE */
-
-.profile-card{
-    margin:15px;
-    padding:25px;
-    text-align:center;
-    border-radius:23px;
-    background:#151b27;
-    border:1px solid #252e3e;
-}
-
 .profile-avatar{
-    width:75px;
-    height:75px;
-    border-radius:50%;
-    margin:auto;
-    background:#ffd43b;
-    color:#111;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:35px;
+  width:72px;height:72px;margin:auto;border-radius:50%;
+  background:#ffd43b;color:#111;display:flex;
+  align-items:center;justify-content:center;font-size:34px
 }
-
-.profile-name{
-    margin-top:12px;
-    font-size:21px;
-    font-weight:900;
-}
+.profile h2{margin-top:12px}
+.profile p{color:#8994a7;font-size:12px;margin-top:5px}
 
 .stats{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin:15px;
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 15px
 }
-
 .stat{
-    background:#151b27;
-    border:1px solid #252e3e;
-    border-radius:17px;
-    padding:18px;
-    text-align:center;
+  padding:18px;text-align:center;border-radius:17px;
+  background:#151b27;border:1px solid #293244
+}
+.stat strong{display:block;font-size:22px}
+.stat small{color:#8994a7}
+
+.screen{
+  display:none;position:fixed;inset:0;z-index:40;
+  background:#080b12;overflow:auto
+}
+.screen.active{display:block}
+.screen-inner{max-width:520px;margin:auto;padding-bottom:30px}
+.screen-header{
+  height:65px;padding:0 16px;display:flex;
+  align-items:center;gap:15px
+}
+.back{font-size:30px;color:#8994a7}
+.screen-header h1{font-size:22px}
+
+.game-box{
+  margin:10px 15px;padding:20px;border-radius:23px;
+  background:#121924;border:1px solid #29364b
+}
+.center{text-align:center}
+.big{
+  font-size:58px;font-weight:900;margin:35px 0
+}
+.status{text-align:center;color:#8994a7;min-height:22px}
+.input{
+  width:100%;padding:15px;margin-top:12px;border-radius:14px;
+  border:1px solid #293244;background:#0c111a;color:white;font-size:16px
+}
+.action{
+  width:100%;margin-top:12px;padding:16px;border:0;
+  border-radius:15px;background:#ffd43b;color:#111;font-size:17px;font-weight:900
+}
+.secondary{
+  width:100%;margin-top:9px;padding:14px;border:1px solid #293244;
+  border-radius:15px;background:#151b27;color:white;font-weight:800
 }
 
-.stat-number{
-    font-size:23px;
-    font-weight:900;
+/* CRASH */
+.crash-graph{
+  height:300px;border-radius:20px;
+  background:radial-gradient(circle,#1b2b46,#0d131d 70%);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;overflow:hidden;position:relative
+}
+.multiplier{font-size:58px;font-weight:900}
+.rocket{font-size:55px;margin-top:15px;transition:.1s}
+
+/* MINES */
+.mine-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:15px
+}
+.mine{
+  aspect-ratio:1;border:0;border-radius:12px;
+  background:#202a3b;color:white;font-size:22px
+}
+.mine.open{background:#263b31}
+.mine.bad{background:#44252a}
+
+/* SLOTS */
+.slots{
+  display:flex;justify-content:center;gap:9px;margin:30px 0
+}
+.slot{
+  width:82px;height:82px;border-radius:16px;
+  background:#202a3b;display:flex;align-items:center;
+  justify-content:center;font-size:42px
 }
 
-.stat-label{
-    color:#8994a8;
-    font-size:11px;
-    margin-top:4px;
+/* WHEEL */
+.wheel{
+  width:245px;height:245px;margin:25px auto;border-radius:50%;
+  background:conic-gradient(
+    #ffd43b 0 45deg,#ef5350 45deg 90deg,
+    #42a5f5 90deg 135deg,#66bb6a 135deg 180deg,
+    #ffd43b 180deg 225deg,#ab47bc 225deg 270deg,
+    #ef5350 270deg 315deg,#42a5f5 315deg 360deg
+  );
+  border:8px solid #202838;
+  transition:transform 3s cubic-bezier(.15,.8,.2,1);
+  display:flex;align-items:center;justify-content:center
+}
+.wheel-center{
+  width:55px;height:55px;background:#111;border-radius:50%;
+  border:5px solid #fff
 }
 
-/* RATING */
-
-.rating{
-    margin:15px;
+/* DICE */
+.dice{
+  width:130px;height:130px;border-radius:22px;background:#fff;color:#111;
+  display:flex;align-items:center;justify-content:center;
+  font-size:70px;font-weight:900;margin:30px auto
 }
 
-.player{
-    display:flex;
-    align-items:center;
-    padding:15px;
-    margin-bottom:9px;
-    background:#151b27;
-    border:1px solid #252e3e;
-    border-radius:17px;
+/* PLINKO */
+.plinko{
+  height:310px;position:relative;overflow:hidden;
+  background:#101722;border-radius:20px
 }
-
-.place{
-    width:35px;
-    color:#ffd43b;
-    font-weight:900;
+.pin{
+  position:absolute;width:7px;height:7px;border-radius:50%;
+  background:#66748c
 }
-
-.player-avatar{
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    background:#293246;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-right:11px;
-}
-
-.player-name{
-    flex:1;
-    font-weight:800;
-}
-
-.player-score{
-    color:#ffd43b;
-    font-weight:900;
-}
-
-/* GAME SCREEN */
-
-.game-screen{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:#070a11;
-    z-index:20;
-    overflow:auto;
-}
-
-.game-screen.active{
-    display:block;
-}
-
-.game-header{
-    max-width:520px;
-    margin:auto;
-    padding:18px;
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
-
-.back{
-    font-size:28px;
-    color:#8994a8;
-}
-
-.game-header h1{
-    font-size:23px;
-}
-
-.crash-area{
-    max-width:490px;
-    height:330px;
-    margin:10px auto;
-    border-radius:25px;
-    background:radial-gradient(circle,#1a2942,#0d131d 65%);
-    border:1px solid #29364b;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-}
-
-.crash-number{
-    font-size:60px;
-    font-weight:900;
-}
-
-.crash-status{
-    margin-top:7px;
-    color:#8994a8;
-}
-
-.game-action{
-    display:block;
-    width:calc(100% - 30px);
-    max-width:490px;
-    margin:15px auto;
-    padding:17px;
-    border:0;
-    border-radius:17px;
-    background:#ffd43b;
-    color:#111;
-    font-size:18px;
-    font-weight:900;
+.ball{
+  width:20px;height:20px;border-radius:50%;background:#ffd43b;
+  position:absolute;left:calc(50% - 10px);top:5px
 }
 
 /* TOAST */
-
 .toast{
-    position:fixed;
-    left:50%;
-    bottom:85px;
-    transform:translateX(-50%) translateY(20px);
-    background:#202838;
-    border:1px solid #344057;
-    padding:13px 18px;
-    border-radius:14px;
-    opacity:0;
-    pointer-events:none;
-    transition:.25s;
-    z-index:50;
-    white-space:nowrap;
+  position:fixed;z-index:100;bottom:88px;left:50%;
+  transform:translateX(-50%) translateY(15px);
+  background:#202838;border:1px solid #344057;
+  padding:12px 17px;border-radius:14px;opacity:0;
+  transition:.2s;pointer-events:none;white-space:nowrap
 }
-
-.toast.show{
-    opacity:1;
-    transform:translateX(-50%) translateY(0);
-}
+.toast.show{opacity:1;transform:translateX(-50%)}
 </style>
 </head>
 
@@ -525,307 +265,338 @@ button{
 <div class="app">
 
 <!-- HOME -->
-
 <div id="home" class="page active">
 
-    <div class="header">
-        <div class="logo">⭐ <span>STAR</span> GAMES</div>
-        <div class="avatar">👤</div>
-    </div>
+<header class="header">
+  <div class="logo">⭐ <span>STAR</span> GAMES</div>
+  <div class="avatar">👤</div>
+</header>
 
-    <div class="balance">
-        <div class="balance-label">Твой баланс</div>
-        <div class="balance-value" id="balance">
-            10 000 <span>🪙</span>
-        </div>
-    </div>
+<div class="balance">
+  <small>Виртуальный баланс</small>
+  <strong id="balance">10 000 🪙</strong>
+</div>
 
-    <div class="categories">
-        <div class="category active">🔥 Популярные</div>
-        <div class="category">🚀 Crash</div>
-        <div class="category">🎰 Slots</div>
-        <div class="category">💣 Mines</div>
-        <div class="category">🎡 Wheel</div>
-    </div>
+<div class="categories">
+  <div class="cat active">🔥 Все</div>
+  <div class="cat">🚀 Crash</div>
+  <div class="cat">💣 Mines</div>
+  <div class="cat">🎰 Slots</div>
+  <div class="cat">🎲 Dice</div>
+</div>
 
-    <div class="section">
-        <h2>🔥 Популярное</h2>
-        <a>Все игры</a>
-    </div>
+<div class="hero">
+  <div class="hero-label">⭐ ИГРА ДНЯ</div>
+  <h1>🚀 Crash</h1>
+  <p>Множитель растёт — остановись вовремя.</p>
+  <button class="yellow" onclick="openScreen('crash')">Играть</button>
+</div>
 
-    <div class="hero">
-        <div class="hero-small">ИГРА ДНЯ</div>
-        <div class="hero-title">🚀 Crash</div>
-        <div class="hero-text">
-            Следи за множителем и получай виртуальные монеты.
-        </div>
-        <button class="hero-button" onclick="openGame()">Играть</button>
-    </div>
+<div class="section">
+  <h2>🎮 Игры</h2>
+  <span>Все</span>
+</div>
 
-    <div class="section">
-        <h2>🎮 Все игры</h2>
-    </div>
+<div class="games">
 
-    <div class="games">
+  <div class="game" onclick="openScreen('crash')">
+    <div class="icon">🚀</div><h3>Crash</h3><p>Множитель</p>
+  </div>
 
-        <div class="game" onclick="openGame()">
-            <div class="game-icon">🚀</div>
-            <div class="game-name">Crash</div>
-            <div class="game-description">Множитель</div>
-        </div>
+  <div class="game" onclick="openScreen('mines')">
+    <div class="icon">💣</div><h3>Mines</h3><p>5 × 5</p>
+  </div>
 
-        <div class="game" onclick="showToast('Mines скоро будет доступна')">
-            <div class="game-icon">💣</div>
-            <div class="game-name">Mines</div>
-            <div class="game-description">Найди клетки</div>
-        </div>
+  <div class="game" onclick="openScreen('slots')">
+    <div class="icon">🎰</div><h3>Slots</h3><p>Барабаны</p>
+  </div>
 
-        <div class="game" onclick="showToast('Slots скоро будет доступна')">
-            <div class="game-icon">🎰</div>
-            <div class="game-name">Slots</div>
-            <div class="game-description">Барабаны</div>
-        </div>
+  <div class="game" onclick="openScreen('wheel')">
+    <div class="icon">🎡</div><h3>Wheel</h3><p>Колесо</p>
+  </div>
 
-        <div class="game" onclick="showToast('Wheel скоро будет доступна')">
-            <div class="game-icon">🎡</div>
-            <div class="game-name">Wheel</div>
-            <div class="game-description">Колесо</div>
-        </div>
+  <div class="game" onclick="openScreen('dice')">
+    <div class="icon">🎲</div><h3>Dice</h3><p>Кости</p>
+  </div>
 
-        <div class="game" onclick="showToast('Dice скоро будет доступна')">
-            <div class="game-icon">🎲</div>
-            <div class="game-name">Dice</div>
-            <div class="game-description">Кости</div>
-        </div>
+  <div class="game" onclick="openScreen('flip')">
+    <div class="icon">🪙</div><h3>Flip</h3><p>Монетка</p>
+  </div>
 
-        <div class="game" onclick="showToast('Flip скоро будет доступна')">
-            <div class="game-icon">🪙</div>
-            <div class="game-name">Flip</div>
-            <div class="game-description">Монетка</div>
-        </div>
+  <div class="game" onclick="openScreen('plinko')">
+    <div class="icon">🔴</div><h3>Plinko</h3><p>Пирамида</p>
+  </div>
 
-    </div>
+  <div class="game" onclick="showToast('Скоро появится')">
+    <div class="icon">🎯</div><h3>Target</h3><p>Скоро</p>
+  </div>
 
-    <div class="bonus">
+</div>
 
-        <div class="bonus-row">
-
-            <div style="display:flex;align-items:center;gap:12px">
-
-                <div class="bonus-icon">🎁</div>
-
-                <div>
-                    <div class="bonus-title">Ежедневный бонус</div>
-                    <div class="bonus-text">+500 виртуальных монет</div>
-                </div>
-
-            </div>
-
-            <button class="bonus-button" onclick="bonus()">
-                Получить
-            </button>
-
-        </div>
-
-    </div>
+<div class="bonus">
+  <div>
+    <div class="bonus-title">🎁 Ежедневный бонус</div>
+    <div class="bonus-text">+500 виртуальных монет</div>
+  </div>
+  <button class="yellow" onclick="bonus()">+500</button>
+</div>
 
 </div>
 
 
 <!-- RATING -->
+<div id="ratingPage" class="page">
 
-<div id="rating" class="page">
+<header class="header">
+  <div class="logo">🏆 Рейтинг</div>
+</header>
 
-    <div class="header">
-        <div class="logo">🏆 Рейтинг</div>
-    </div>
+<div class="section"><h2>Лучшие игроки</h2></div>
 
-    <div class="section">
-        <h2>Лучшие игроки</h2>
-    </div>
-
-    <div class="rating">
-
-        <div class="player">
-            <div class="place">1</div>
-            <div class="player-avatar">👑</div>
-            <div class="player-name">StarKing</div>
-            <div class="player-score">98 420</div>
-        </div>
-
-        <div class="player">
-            <div class="place">2</div>
-            <div class="player-avatar">🔥</div>
-            <div class="player-name">Lucky</div>
-            <div class="player-score">82 700</div>
-        </div>
-
-        <div class="player">
-            <div class="place">3</div>
-            <div class="player-avatar">⭐</div>
-            <div class="player-name">Player777</div>
-            <div class="player-score">76 300</div>
-        </div>
-
-        <div class="player">
-            <div class="place">4</div>
-            <div class="player-avatar">😎</div>
-            <div class="player-name">Gamer</div>
-            <div class="player-score">61 500</div>
-        </div>
-
-    </div>
+<div class="list">
+  <div class="row"><div class="num">1</div><div class="name">👑 StarKing</div><div class="score">98 420</div></div>
+  <div class="row"><div class="num">2</div><div class="name">🔥 Lucky</div><div class="score">82 700</div></div>
+  <div class="row"><div class="num">3</div><div class="name">⭐ Player777</div><div class="score">76 300</div></div>
+  <div class="row"><div class="num">4</div><div class="name">😎 Gamer</div><div class="score">61 500</div></div>
+  <div class="row"><div class="num">5</div><div class="name">🚀 Rocket</div><div class="score">55 200</div></div>
+</div>
 
 </div>
 
 
-<!-- BONUS PAGE -->
-
+<!-- BONUS -->
 <div id="bonusPage" class="page">
 
-    <div class="header">
-        <div class="logo">🎁 Бонусы</div>
-    </div>
+<header class="header"><div class="logo">🎁 Бонусы</div></header>
 
-    <div class="bonus" style="margin-top:15px">
+<div class="bonus">
+  <div>
+    <div class="bonus-title">🎁 Ежедневный бонус</div>
+    <div class="bonus-text">Забери свои виртуальные монеты</div>
+  </div>
+  <button class="yellow" onclick="bonus()">+500</button>
+</div>
 
-        <div class="bonus-row">
-
-            <div>
-                <div class="bonus-title">🎁 Ежедневный бонус</div>
-                <div class="bonus-text">Получай 500 монет каждый день</div>
-            </div>
-
-            <button class="bonus-button" onclick="bonus()">
-                +500
-            </button>
-
-        </div>
-
-    </div>
-
-    <div class="bonus">
-
-        <div class="bonus-row">
-
-            <div>
-                <div class="bonus-title">🔥 Серия дней</div>
-                <div class="bonus-text">Продолжай заходить каждый день</div>
-            </div>
-
-            <div style="font-size:25px">7🔥</div>
-
-        </div>
-
-    </div>
+<div class="bonus">
+  <div>
+    <div class="bonus-title">🔥 Серия входов</div>
+    <div class="bonus-text">Текущая серия: 7 дней</div>
+  </div>
+  <strong>7🔥</strong>
+</div>
 
 </div>
 
 
 <!-- PROFILE -->
+<div id="profilePage" class="page">
 
-<div id="profile" class="page">
+<header class="header"><div class="logo">👤 Профиль</div></header>
 
-    <div class="header">
-        <div class="logo">👤 Профиль</div>
-    </div>
+<div class="profile">
+  <div class="profile-avatar">👤</div>
+  <h2>Star Player</h2>
+  <p>ID: 100001</p>
+</div>
 
-    <div class="profile-card">
-
-        <div class="profile-avatar">👤</div>
-
-        <div class="profile-name">Star Player</div>
-
-        <div style="color:#8994a8;margin-top:5px;font-size:12px">
-            ID: 100001
-        </div>
-
-    </div>
-
-    <div class="stats">
-
-        <div class="stat">
-            <div class="stat-number">24</div>
-            <div class="stat-label">Игр</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-number">18</div>
-            <div class="stat-label">Побед</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-number">10 000</div>
-            <div class="stat-label">Баланс</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-number">#124</div>
-            <div class="stat-label">Место</div>
-        </div>
-
-    </div>
+<div class="stats">
+  <div class="stat"><strong id="gamesCount">0</strong><small>Игр</small></div>
+  <div class="stat"><strong id="winsCount">0</strong><small>Побед</small></div>
+  <div class="stat"><strong id="balanceStat">10 000</strong><small>Баланс</small></div>
+  <div class="stat"><strong>#124</strong><small>Рейтинг</small></div>
+</div>
 
 </div>
 
 </div>
 
 
-<!-- BOTTOM NAV -->
+<!-- NAV -->
+<nav class="nav">
 
-<div class="bottom">
-
-    <div class="bottom-item active" onclick="showPage('home',this)">
-        <div class="bottom-icon">🎮</div>
-        Игры
-    </div>
-
-    <div class="bottom-item" onclick="showPage('rating',this)">
-        <div class="bottom-icon">🏆</div>
-        Рейтинг
-    </div>
-
-    <div class="bottom-item" onclick="showPage('bonusPage',this)">
-        <div class="bottom-icon">🎁</div>
-        Бонус
-    </div>
-
-    <div class="bottom-item" onclick="showPage('profile',this)">
-        <div class="bottom-icon">👤</div>
-        Профиль
-    </div>
-
+<div class="nav-item active" onclick="page('home',this)">
+  <div>🎮</div>Игры
 </div>
+
+<div class="nav-item" onclick="page('ratingPage',this)">
+  <div>🏆</div>Рейтинг
+</div>
+
+<div class="nav-item" onclick="page('bonusPage',this)">
+  <div>🎁</div>Бонус
+</div>
+
+<div class="nav-item" onclick="page('profilePage',this)">
+  <div>👤</div>Профиль
+</div>
+
+</nav>
 
 
 <!-- CRASH -->
+<div id="crash" class="screen">
+<div class="screen-inner">
 
-<div class="game-screen" id="crash">
+<div class="screen-header">
+  <div class="back" onclick="closeScreen('crash')">‹</div>
+  <h1>🚀 Crash</h1>
+</div>
 
-    <div class="game-header">
+<div class="game-box">
 
-        <div class="back" onclick="closeGame()">‹</div>
+<div class="crash-graph">
+  <div class="multiplier" id="crashMultiplier">1.00x</div>
+  <div class="rocket" id="rocket">🚀</div>
+</div>
 
-        <h1>🚀 Crash</h1>
+<div class="status" id="crashStatus">Нажми «Старт»</div>
 
-    </div>
+<input id="crashBet" class="input" type="number" value="100" min="1" placeholder="Ставка виртуальных монет">
 
-    <div class="crash-area">
+<button class="action" onclick="startCrash()">🚀 СТАРТ</button>
 
-        <div class="crash-number" id="crashNumber">
-            1.00x
-        </div>
+</div>
+</div>
+</div>
 
-        <div class="crash-status" id="crashStatus">
-            Готово к игре
-        </div>
 
-    </div>
+<!-- MINES -->
+<div id="mines" class="screen">
+<div class="screen-inner">
 
-    <button class="game-action" onclick="startCrash()">
-        🚀 НАЧАТЬ ИГРУ
-    </button>
+<div class="screen-header">
+  <div class="back" onclick="closeScreen('mines')">‹</div>
+  <h1>💣 Mines</h1>
+</div>
 
+<div class="game-box">
+<div class="status" id="mineStatus">Найди безопасные клетки</div>
+<div class="mine-grid" id="mineGrid"></div>
+<button class="action" onclick="newMines()">Новая игра</button>
+</div>
+
+</div>
+</div>
+
+
+<!-- SLOTS -->
+<div id="slots" class="screen">
+<div class="screen-inner">
+
+<div class="screen-header">
+  <div class="back" onclick="closeScreen('slots')">‹</div>
+  <h1>🎰 Slots</h1>
+</div>
+
+<div class="game-box center">
+
+<div class="slots">
+  <div class="slot" id="slot1">🍒</div>
+  <div class="slot" id="slot2">⭐</div>
+  <div class="slot" id="slot3">💎</div>
+</div>
+
+<div class="status" id="slotStatus">Крути барабаны</div>
+
+<button class="action" onclick="spinSlots()">🎰 КРУТИТЬ</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- WHEEL -->
+<div id="wheel" class="screen">
+<div class="screen-inner">
+
+<div class="screen-header">
+  <div class="back" onclick="closeScreen('wheel')">‹</div>
+  <h1>🎡 Wheel</h1>
+</div>
+
+<div class="game-box center">
+
+<div class="wheel" id="wheelObject">
+  <div class="wheel-center"></div>
+</div>
+
+<div class="status" id="wheelStatus">Крути колесо</div>
+
+<button class="action" onclick="spinWheel()">🎡 КРУТИТЬ</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- DICE -->
+<div id="dice" class="screen">
+<div class="screen-inner">
+
+<div class="screen-header">
+  <div class="back" onclick="closeScreen('dice')">‹</div>
+  <h1>🎲 Dice</h1>
+</div>
+
+<div class="game-box center">
+
+<div class="dice" id="diceObject">?</div>
+
+<div class="status" id="diceStatus">Брось кость</div>
+
+<button class="action" onclick="rollDice()">🎲 БРОСИТЬ</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- FLIP -->
+<div id="flip" class="screen">
+<div class="screen-inner">
+
+<div class="screen-header">
+  <div class="back" onclick="closeScreen('flip')">‹</div>
+  <h1>🪙 Flip</h1>
+</div>
+
+<div class="game-box center">
+
+<div class="big" id="coin">🪙</div>
+
+<div class="status" id="flipStatus">Орёл или решка?</div>
+
+<button class="action" onclick="flipCoin()">🪙 БРОСИТЬ</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- PLINKO -->
+<div id="plinko" class="screen">
+<div class="screen-inner">
+
+<div class="screen-header">
+  <div class="back" onclick="closeScreen('plinko')">‹</div>
+  <h1>🔴 Plinko</h1>
+</div>
+
+<div class="game-box">
+
+<div class="plinko" id="plinkoBoard"></div>
+
+<div class="status" id="plinkoStatus">Запусти шар</div>
+
+<button class="action" onclick="dropBall()">🔴 ЗАПУСТИТЬ</button>
+
+</div>
+
+</div>
 </div>
 
 
@@ -834,105 +605,470 @@ button{
 
 <script>
 
-let balance = 10000;
-let crashRunning = false;
+/* ---------------- BALANCE ---------------- */
 
-function updateBalance(){
+let balance=10000;
+let games=0;
+let wins=0;
 
-    document.getElementById("balance").innerHTML =
-        balance.toLocaleString("ru-RU") +
-        ' <span>🪙</span>';
+function update(){
 
+  document.getElementById("balance").innerHTML =
+    balance.toLocaleString("ru-RU")+" 🪙";
+
+  document.getElementById("balanceStat").innerText =
+    balance.toLocaleString("ru-RU");
+
+  document.getElementById("gamesCount").innerText=games;
+  document.getElementById("winsCount").innerText=wins;
 }
 
-function showPage(id,element){
+function reward(amount){
 
-    document.querySelectorAll(".page").forEach(function(page){
-        page.classList.remove("active");
-    });
+  balance+=amount;
 
-    document.getElementById(id).classList.add("active");
-
-    document.querySelectorAll(".bottom-item").forEach(function(item){
-        item.classList.remove("active");
-    });
-
-    element.classList.add("active");
-
+  update();
 }
 
-function bonus(){
 
-    balance += 500;
+/* ---------------- NAVIGATION ---------------- */
 
-    updateBalance();
+function page(id,el){
 
-    showToast("🎁 +500 виртуальных монет");
+  document.querySelectorAll(".page").forEach(x=>{
+    x.classList.remove("active");
+  });
 
+  document.getElementById(id).classList.add("active");
+
+  document.querySelectorAll(".nav-item").forEach(x=>{
+    x.classList.remove("active");
+  });
+
+  el.classList.add("active");
 }
+
+function openScreen(id){
+  document.getElementById(id).classList.add("active");
+}
+
+function closeScreen(id){
+  document.getElementById(id).classList.remove("active");
+}
+
+
+/* ---------------- TOAST ---------------- */
 
 function showToast(text){
 
-    const toast = document.getElementById("toast");
+  let t=document.getElementById("toast");
 
-    toast.innerText = text;
+  t.innerText=text;
+  t.classList.add("show");
 
-    toast.classList.add("show");
+  setTimeout(()=>{
+    t.classList.remove("show");
+  },2000);
+}
 
-    setTimeout(function(){
-        toast.classList.remove("show");
-    },2200);
+
+/* ---------------- BONUS ---------------- */
+
+function bonus(){
+
+  reward(500);
+
+  showToast("🎁 +500 виртуальных монет");
 
 }
 
-function openGame(){
 
-    document.getElementById("crash").classList.add("active");
+/* ---------------- CRASH ---------------- */
 
+/*
+  Распределение:
+  большинство раундов заканчиваются
+  около 1-2x.
+  Высокие значения становятся значительно реже.
+*/
+
+function crashPoint(){
+
+  let r=Math.random();
+
+  if(r<0.55){
+    return 1+Math.random()*0.7;
+  }
+
+  if(r<0.80){
+    return 1.7+Math.random()*1.3;
+  }
+
+  if(r<0.93){
+    return 3+Math.random()*5;
+  }
+
+  if(r<0.985){
+    return 8+Math.random()*22;
+  }
+
+  if(r<0.997){
+    return 30+Math.random()*70;
+  }
+
+  return 100+Math.random()*150;
 }
 
-function closeGame(){
-
-    document.getElementById("crash").classList.remove("active");
-
-}
+let crashRunning=false;
 
 function startCrash(){
 
-    if(crashRunning) return;
+  if(crashRunning)return;
 
-    crashRunning = true;
+  let bet=parseInt(document.getElementById("crashBet").value);
 
-    let multiplier = 1;
+  if(!bet || bet<1){
+    showToast("Введите ставку");
+    return;
+  }
 
-    document.getElementById("crashStatus").innerText =
-        "Множитель растёт...";
+  if(bet>balance){
+    showToast("Недостаточно монет");
+    return;
+  }
 
-    const interval = setInterval(function(){
+  balance-=bet;
+  update();
 
-        multiplier += 0.05;
+  games++;
+  crashRunning=true;
 
-        document.getElementById("crashNumber").innerText =
-            multiplier.toFixed(2) + "x";
+  let target=crashPoint();
+  let current=1;
 
-        if(multiplier >= 2.50){
+  let number=document.getElementById("crashMultiplier");
+  let rocket=document.getElementById("rocket");
+  let status=document.getElementById("crashStatus");
 
-            clearInterval(interval);
+  status.innerText="🚀 Полёт начался";
 
-            crashRunning = false;
+  let speed=0.025;
 
-            balance += 250;
+  let timer=setInterval(()=>{
 
-            updateBalance();
+    current+=speed;
 
-            document.getElementById("crashStatus").innerText =
-                "🚀 Раунд завершён • +250 🪙";
+    number.innerText=current.toFixed(2)+"x";
 
-        }
+    rocket.style.transform=
+      "translate("+(current*7)+"px,-"+(current*2)+"px)";
 
-    },100);
+    if(current>=target){
+
+      clearInterval(timer);
+
+      number.innerText=target.toFixed(2)+"x";
+
+      status.innerText="💥 КРАШ на "+target.toFixed(2)+"x";
+
+      crashRunning=false;
+
+      update();
+
+    }
+
+  },50);
 
 }
+
+
+/* ---------------- MINES ---------------- */
+
+let mineBomb;
+let mineOpen=0;
+
+function newMines(){
+
+  mineBomb=Math.floor(Math.random()*25);
+  mineOpen=0;
+
+  let grid=document.getElementById("mineGrid");
+
+  grid.innerHTML="";
+
+  for(let i=0;i<25;i++){
+
+    let b=document.createElement("button");
+
+    b.className="mine";
+    b.innerText="";
+
+    b.onclick=()=>openMine(b,i);
+
+    grid.appendChild(b);
+  }
+
+  document.getElementById("mineStatus").innerText=
+    "Найди безопасные клетки";
+
+}
+
+function openMine(button,index){
+
+  if(button.classList.contains("open") ||
+     button.classList.contains("bad")) return;
+
+  if(index===mineBomb){
+
+    button.classList.add("bad");
+    button.innerText="💣";
+
+    document.getElementById("mineStatus").innerText=
+      "💥 Мина! Игра окончена";
+
+    return;
+  }
+
+  button.classList.add("open");
+  button.innerText="💎";
+
+  mineOpen++;
+
+  let rewardAmount=mineOpen*25;
+
+  reward(rewardAmount);
+
+  document.getElementById("mineStatus").innerText=
+    "💎 +"+rewardAmount+" 🪙";
+
+}
+
+newMines();
+
+
+/* ---------------- SLOTS ---------------- */
+
+const symbols=["🍒","🍋","⭐","💎","7️⃣"];
+
+function spinSlots(){
+
+  let a=symbols[Math.floor(Math.random()*symbols.length)];
+  let b=symbols[Math.floor(Math.random()*symbols.length)];
+  let c=symbols[Math.floor(Math.random()*symbols.length)];
+
+  document.getElementById("slot1").innerText=a;
+  document.getElementById("slot2").innerText=b;
+  document.getElementById("slot3").innerText=c;
+
+  let status=document.getElementById("slotStatus");
+
+  if(a===b && b===c){
+
+    let amount=500;
+
+    reward(amount);
+
+    wins++;
+
+    status.innerText="🎉 JACKPOT +"+amount+" 🪙";
+
+  }else if(a===b || b===c || a===c){
+
+    let amount=100;
+
+    reward(amount);
+
+    wins++;
+
+    status.innerText="⭐ +"+amount+" 🪙";
+
+  }else{
+
+    status.innerText="Попробуй ещё";
+
+  }
+
+  games++;
+
+  update();
+
+}
+
+
+/* ---------------- WHEEL ---------------- */
+
+let wheelRotation=0;
+
+function spinWheel(){
+
+  let wheel=document.getElementById("wheelObject");
+
+  let extra=1080+Math.floor(Math.random()*1080);
+
+  wheelRotation+=extra;
+
+  wheel.style.transform=
+    "rotate("+wheelRotation+"deg)";
+
+  setTimeout(()=>{
+
+    let amount=[25,50,100,200,500][
+      Math.floor(Math.random()*5)
+    ];
+
+    reward(amount);
+    wins++;
+    games++;
+
+    document.getElementById("wheelStatus").innerText=
+      "🎁 +"+amount+" 🪙";
+
+    update();
+
+  },3000);
+
+}
+
+
+/* ---------------- DICE ---------------- */
+
+function rollDice(){
+
+  let value=Math.floor(Math.random()*6)+1;
+
+  let d=document.getElementById("diceObject");
+
+  d.innerText=value;
+
+  let amount=value*50;
+
+  reward(amount);
+
+  games++;
+
+  if(value>=4)wins++;
+
+  document.getElementById("diceStatus").innerText=
+    "🎲 Выпало "+value+" • +"+amount+" 🪙";
+
+  update();
+
+}
+
+
+/* ---------------- FLIP ---------------- */
+
+function flipCoin(){
+
+  let result=Math.random()<0.5 ? "Орёл" : "Решка";
+
+  document.getElementById("coin").innerText=
+    result==="Орёл" ? "🦅" : "🪙";
+
+  reward(100);
+
+  games++;
+
+  if(result==="Орёл")wins++;
+
+  document.getElementById("flipStatus").innerText=
+    result+" • +100 🪙";
+
+  update();
+
+}
+
+
+/* ---------------- PLINKO ---------------- */
+
+function createPins(){
+
+  let board=document.getElementById("plinkoBoard");
+
+  board.innerHTML="";
+
+  for(let row=0;row<8;row++){
+
+    for(let col=0;col<8;col++){
+
+      let pin=document.createElement("div");
+
+      pin.className="pin";
+
+      pin.style.left=
+        (15+col*10+(row%2?5:0))+"%";
+
+      pin.style.top=
+        (15+row*10)+"%";
+
+      board.appendChild(pin);
+    }
+  }
+}
+
+createPins();
+
+function dropBall(){
+
+  let board=document.getElementById("plinkoBoard");
+
+  let ball=document.createElement("div");
+
+  ball.className="ball";
+
+  board.appendChild(ball);
+
+  let x=50;
+
+  let y=5;
+
+  let step=0;
+
+  let timer=setInterval(()=>{
+
+    y+=4;
+
+    x+=(Math.random()<0.5?-1.7:1.7);
+
+    x=Math.max(8,Math.min(92,x));
+
+    ball.style.left=
+      "calc("+x+"% - 10px)";
+
+    ball.style.top=y+"%";
+
+    step++;
+
+    if(step>=23){
+
+      clearInterval(timer);
+
+      let amount=[25,50,75,100,200,500][
+        Math.floor(Math.random()*6)
+      ];
+
+      reward(amount);
+
+      games++;
+
+      if(amount>=200)wins++;
+
+      document.getElementById("plinkoStatus").innerText=
+        "🔴 +"+amount+" 🪙";
+
+      update();
+
+      setTimeout(()=>{
+        ball.remove();
+      },500);
+
+    }
+
+  },70);
+
+}
+
+update();
 
 </script>
 

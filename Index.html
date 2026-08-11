@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Star Games</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0b0f19;
+      color: white;
+      min-height: 100vh;
+    }
+
+    .app {
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
+    .balance {
+      background: #151c2d;
+      border-radius: 20px;
+      padding: 22px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .balance-title {
+      color: #9ca6bb;
+      font-size: 14px;
+    }
+
+    .coins {
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    .game {
+      background: #151c2d;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+
+    .game h2 {
+      margin-bottom: 8px;
+    }
+
+    .game p {
+      color: #9ca6bb;
+      margin-bottom: 15px;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 15px;
+      font-size: 17px;
+      font-weight: bold;
+      background: #ffd43b;
+      color: #111;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .result {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 18px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #687389;
+      margin-top: 30px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <div class="logo">
+      ⭐ STAR GAMES
+    </div>
+
+    <div class="balance">
+      <div class="balance-title">Твои виртуальные монеты</div>
+      <div class="coins" id="balance">10 000 🪙</div>
+    </div>
+
+    <div class="game">
+      <h2>🚀 Crash</h2>
+      <p>Проверь удачу и получи виртуальные монеты.</p>
+
+      <button onclick="playCrash()">
+        🎮 Играть
+      </button>
+
+      <div class="result" id="result"></div>
+    </div>
+
+    <div class="game">
+      <h2>🎁 Ежедневный бонус</h2>
+      <p>Получай виртуальные монеты каждый день.</p>
+
+      <button onclick="bonus()">
+        Получить бонус
+      </button>
+    </div>
+
+    <div class="game">
+      <h2>🏆 Рейтинг</h2>
+      <p>Скоро здесь появится таблица лучших игроков.</p>
+    </div>
+
+    <div class="game">
+      <h2>👤 Профиль</h2>
+      <p id="profile">Telegram-пользователь</p>
+    </div>
+
+    <div class="footer">
+      Star Games • Demo
+    </div>
+
+  </div>
+
+  <script>
+    let balance = 10000;
+
+    function updateBalance() {
+      document.getElementById("balance").innerText =
+        balance.toLocaleString("ru-RU") + " 🪙";
+    }
+
+    function playCrash() {
+      const multiplier = (1 + Math.random() * 4).toFixed(2);
+      const reward = Math.floor(100 * multiplier);
+
+      balance += reward;
+
+      document.getElementById("result").innerText =
+        "🚀 Множитель: " + multiplier + "x\n+" +
+        reward + " 🪙";
+
+      updateBalance();
+    }
+
+    function bonus() {
+      balance += 500;
+
+      document.getElementById("result").innerText =
+        "🎁 Ты получил 500 🪙";
+
+      updateBalance();
+    }
+  </script>
+
+</body>
+</html>

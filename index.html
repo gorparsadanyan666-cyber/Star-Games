@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Random Games Clone</title>
+  <title>Random Games</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
-      --bg-color: #0b0d14;
-      --card-bg: rgba(22, 27, 38, 0.7);
+      --bg-main: #0a0d14;
+      --card-bg: rgba(23, 29, 43, 0.7);
       --accent-yellow: #ffd43b;
       --accent-green: #2ecc71;
       --accent-red: #e74c3c;
-      --text-muted: #808d9e;
+      --text-muted: #6f7d93;
       --border-color: rgba(255, 255, 255, 0.08);
-      --glass-bg: rgba(18, 24, 38, 0.85);
+      --glass-nav: rgba(14, 18, 27, 0.9);
     }
 
     * {
@@ -27,7 +27,7 @@
     }
 
     body {
-      background-color: var(--bg-color);
+      background-color: var(--bg-main);
       color: #ffffff;
       padding-bottom: 85px;
       overflow-x: hidden;
@@ -39,17 +39,41 @@
       position: relative;
     }
 
-    /* --- ВЕРХНЯЯ ПАНЕЛЬ --- */
+    /* --- TOAST --- */
+    .toast {
+      position: fixed;
+      top: 75px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: rgba(23, 29, 43, 0.95);
+      border: 1px solid var(--border-color);
+      padding: 12px 22px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      pointer-events: none;
+      z-index: 500;
+      backdrop-filter: blur(10px);
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* --- HEADER --- */
     .header {
       padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
+      background: var(--glass-nav);
+      backdrop-filter: blur(15px);
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 100;
       border-bottom: 1px solid var(--border-color);
     }
 
@@ -60,23 +84,22 @@
     }
 
     .user-avatar {
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: linear-gradient(135deg, #ffd43b, #ff922b);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      color: #111;
+      color: #000;
       font-size: 18px;
-      box-shadow: 0 0 12px rgba(255, 212, 59, 0.2);
+      box-shadow: 0 0 12px rgba(255, 212, 59, 0.25);
     }
 
     .user-name {
       font-size: 14px;
       font-weight: 700;
-      color: #fff;
     }
 
     .balance-box {
@@ -104,10 +127,9 @@
       font-size: 12px;
       color: #000;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(255, 212, 59, 0.3);
     }
 
-    /* --- БАННЕР --- */
+    /* --- BANNER --- */
     .promo-banner {
       margin: 14px 16px;
       padding: 16px;
@@ -120,13 +142,24 @@
       font-weight: 800;
       font-size: 14px;
       box-shadow: 0 6px 20px rgba(255, 140, 0, 0.25);
+      cursor: pointer;
     }
 
-    /* --- СЕТКА ИГР В СТИЛЕ RANDOM GAMES --- */
+    /* --- GAMES GRID (RANDOM GAMES STYLE) --- */
+    .section-title {
+      padding: 0 16px;
+      margin-bottom: 12px;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
     .games-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 10px;
       padding: 0 16px;
     }
 
@@ -144,7 +177,7 @@
       overflow: hidden;
       cursor: pointer;
       box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      transition: all 0.15s ease;
+      transition: transform 0.15s ease;
       backdrop-filter: blur(5px);
     }
 
@@ -154,20 +187,19 @@
 
     .game-card img {
       position: absolute;
-      top: 12px;
-      width: 65px;
-      height: 65px;
+      top: 10px;
+      width: 60px;
+      height: 60px;
       object-fit: contain;
       filter: drop-shadow(0 6px 10px rgba(0,0,0,0.5));
     }
 
     .game-card .title {
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 12px;
+      font-weight: 800;
       text-align: center;
       z-index: 2;
       color: #fff;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
     .badge {
@@ -184,13 +216,14 @@
       color: var(--accent-yellow);
     }
 
-    /* Градиенты карточек */
-    .bg-mines { background: linear-gradient(180deg, #1b3d30 0%, #111823 100%); }
-    .bg-rocket { background: linear-gradient(180deg, #4d1c26 0%, #111823 100%); }
-    .bg-slots { background: linear-gradient(180deg, #1f2b4d 0%, #111823 100%); }
-    .bg-gift { background: linear-gradient(180deg, #4a3818 0%, #111823 100%); }
+    /* Gradient Themes */
+    .bg-plane { background: linear-gradient(180deg, #3d1c24 0%, #111622 100%); }
+    .bg-mines { background: linear-gradient(180deg, #1b3d30 0%, #111622 100%); }
+    .bg-slots { background: linear-gradient(180deg, #1d2b45 0%, #111622 100%); }
+    .bg-gift { background: linear-gradient(180deg, #3d311b 0%, #111622 100%); }
+    .bg-pvp { background: linear-gradient(180deg, #2b1f3d 0%, #111622 100%); }
 
-    /* --- НИЖНЯЯ НАВИГАЦИЯ --- */
+    /* --- BOTTOM NAV --- */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -198,7 +231,7 @@
       transform: translateX(-50%);
       width: min(480px, 100%);
       height: 70px;
-      background: var(--glass-bg);
+      background: var(--glass-nav);
       backdrop-filter: blur(16px);
       border-top: 1px solid var(--border-color);
       display: flex;
@@ -211,10 +244,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       color: var(--text-muted);
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
     }
 
@@ -222,16 +255,14 @@
       color: var(--accent-yellow);
     }
 
-    .nav-item div {
-      font-size: 22px;
-    }
+    .nav-item div { font-size: 20px; }
 
-    /* --- ЭКРАН ИГРЫ --- */
+    /* --- PAGES / SCREENS --- */
     .screen {
       display: none;
       position: fixed;
       inset: 0;
-      background: var(--bg-color);
+      background: var(--bg-main);
       z-index: 200;
       overflow-y: auto;
       max-width: 480px;
@@ -245,7 +276,7 @@
       align-items: center;
       gap: 15px;
       border-bottom: 1px solid var(--border-color);
-      background: var(--glass-bg);
+      background: var(--glass-nav);
     }
 
     .btn-back {
@@ -262,17 +293,14 @@
       border: 1px solid var(--border-color);
     }
 
-    .input-group {
-      margin-bottom: 12px;
-    }
-
+    .input-group { margin-bottom: 12px; }
     .input-group label {
       display: block;
       font-size: 11px;
       color: var(--text-muted);
       margin-bottom: 6px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      font-weight: 700;
     }
 
     .input-group input {
@@ -305,7 +333,41 @@
       box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3) !important;
     }
 
-    /* СЕТКА "МИНЫ" */
+    /* --- ИГРА: САМОЛЁТИК (CRASH) --- */
+    .plane-area {
+      height: 240px;
+      margin: 16px;
+      border-radius: 20px;
+      background: radial-gradient(circle at center, #23121e 0%, #0d1017 100%);
+      border: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .plane-mult {
+      font-size: 48px;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 20px rgba(255, 212, 59, 0.4);
+    }
+
+    .plane-img {
+      font-size: 45px;
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      transition: all 0.1s linear;
+    }
+
+    .plane-crashed {
+      color: var(--accent-red) !important;
+    }
+
+    /* --- ИГРА: МИНЫ --- */
     .mines-board {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -315,7 +377,7 @@
 
     .mine-cell {
       aspect-ratio: 1;
-      background: #181f2c;
+      background: #161c29;
       border-radius: 12px;
       border: 1px solid var(--border-color);
       display: flex;
@@ -331,49 +393,11 @@
     .mine-cell.safe {
       background: rgba(46, 204, 113, 0.15);
       border-color: var(--accent-green);
-      animation: pop 0.2s ease;
     }
 
     .mine-cell.bomb {
       background: rgba(231, 76, 60, 0.2);
       border-color: var(--accent-red);
-      animation: shake 0.3s ease;
-    }
-
-    @keyframes pop {
-      0% { transform: scale(0.8); }
-      100% { transform: scale(1); }
-    }
-
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
-    }
-
-    /* --- ВСПОМОГАТЕЛЬНОЕ УВЕДОМЛЕНИЕ (TOAST) --- */
-    .toast {
-      position: fixed;
-      top: 75px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-20px);
-      background: rgba(22, 27, 38, 0.95);
-      border: 1px solid var(--border-color);
-      padding: 12px 20px;
-      border-radius: 30px;
-      font-weight: bold;
-      font-size: 13px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-      opacity: 0;
-      transition: all 0.3s ease;
-      pointer-events: none;
-      z-index: 300;
-      backdrop-filter: blur(10px);
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
     }
   </style>
 </head>
@@ -381,10 +405,10 @@
 
 <div class="app">
 
-  <!-- TOAST УВЕДОМЛЕНИЕ -->
+  <!-- TOAST -->
   <div class="toast" id="toast"></div>
 
-  <!-- ШАПКА -->
+  <!-- HEADER -->
   <div class="header">
     <div class="user-info">
       <div class="user-avatar" id="avatar">👤</div>
@@ -392,54 +416,62 @@
     </div>
     <div class="balance-box">
       <span class="balance-amount" id="balance">10 000 🪙</span>
-      <button class="btn-deposit" onclick="showToast('⭐ Пополнение скоро!')">+ ⭐</button>
+      <button class="btn-deposit" onclick="showToast('⭐ Раздел пополнения скоро!')">+ ⭐</button>
     </div>
   </div>
 
-  <!-- ГЛАВНАЯ СТРАНИЦА -->
+  <!-- HOME PAGE -->
   <div id="homePage">
-    <div class="promo-banner" onclick="showToast('🎁 Бонус забран!')">
-      <span>🎁 Забрать ежедневный бонус</span>
+    <div class="promo-banner" onclick="showToast('🎁 Награда получена: +500 🪙!')">
+      <span>🎁 Забрать ежедневную награду</span>
       <span style="font-size: 18px;">➔</span>
     </div>
 
-    <!-- ИГРОВАЯ СЕТКА С ИКОНКАМИ В СТИЛЕ RANDOM GAMES -->
+    <div class="section-title">Все игры</div>
+
     <div class="games-grid">
+      <!-- Самолетик -->
+      <div class="game-card bg-plane" onclick="openGame('planeScreen')">
+        <div class="badge">HOT</div>
+        <img src="https://cdn-icons-png.flaticon.com/512/1356/1356479.png" alt="Plane">
+        <div class="title">Самолётик</div>
+      </div>
+
+      <!-- Мины -->
       <div class="game-card bg-mines" onclick="openGame('minesScreen')">
         <img src="https://cdn-icons-png.flaticon.com/512/3502/3502685.png" alt="Mines">
         <div class="title">Мины</div>
       </div>
-      
-      <div class="game-card bg-rocket" onclick="showToast('🚀 Скоро!')">
-        <img src="https://cdn-icons-png.flaticon.com/512/1356/1356479.png" alt="Rocket">
-        <div class="title">Ракетка</div>
+
+      <!-- PVP -->
+      <div class="game-card bg-pvp" onclick="showToast('⚔️ Скоро!')">
+        <img src="https://cdn-icons-png.flaticon.com/512/1063/1063376.png" alt="PVP">
+        <div class="title">PVP</div>
       </div>
 
-      <div class="game-card bg-slots" onclick="showToast('🎰 Скоро!')">
-        <img src="https://cdn-icons-png.flaticon.com/512/2618/2618170.png" alt="Slots">
-        <div class="title">MineSlot</div>
-      </div>
-
+      <!-- Розыгрыши -->
       <div class="game-card bg-gift" onclick="showToast('🧢 Скоро!')">
         <div class="badge">3 активных</div>
         <img src="https://cdn-icons-png.flaticon.com/512/3349/3349232.png" alt="Giveaway">
         <div class="title">Розыгрыши</div>
       </div>
 
+      <!-- Слоты -->
+      <div class="game-card bg-slots" onclick="showToast('🎰 Скоро!')">
+        <img src="https://cdn-icons-png.flaticon.com/512/2618/2618170.png" alt="Slots">
+        <div class="title">MineSlot</div>
+      </div>
+
+      <!-- Дорога -->
       <div class="game-card bg-mines" onclick="showToast('🎁 Скоро!')">
         <div class="badge">x2.5</div>
         <img src="https://cdn-icons-png.flaticon.com/512/4213/4213958.png" alt="Road">
         <div class="title">Дорога</div>
       </div>
-
-      <div class="game-card bg-rocket" onclick="showToast('🤼 Скоро!')">
-        <img src="https://cdn-icons-png.flaticon.com/512/2965/2965300.png" alt="UFC">
-        <div class="title">UFC</div>
-      </div>
     </div>
   </div>
 
-  <!-- НИЖНЕЕ МЕНЮ -->
+  <!-- BOTTOM NAV -->
   <div class="bottom-nav">
     <div class="nav-item active">
       <div>🏠</div>
@@ -459,7 +491,29 @@
     </div>
   </div>
 
-  <!-- ЭКРАН ИГРЫ MINES -->
+  <!-- ИГРА: САМОЛЁТИК (CRASH) -->
+  <div id="planeScreen" class="screen">
+    <div class="screen-header">
+      <div class="btn-back" onclick="closeGame('planeScreen')">‹</div>
+      <h3>🚀 Самолётик (Crash)</h3>
+    </div>
+
+    <div class="plane-area">
+      <div class="plane-mult" id="planeMult">1.00x</div>
+      <div class="plane-img" id="planeImg">🚀</div>
+    </div>
+
+    <div class="controls">
+      <div class="input-group">
+        <label>Ставка (🪙):</label>
+        <input type="number" id="planeBet" value="100" min="10">
+      </div>
+      <button class="btn-action" id="btnStartPlane" onclick="startPlane()">ВЗЛЕТЕТЬ</button>
+      <button class="btn-action btn-cashout" id="btnCashoutPlane" style="display:none;" onclick="cashoutPlane()">ЗАБРАТЬ <span id="planeWin">0</span> 🪙</button>
+    </div>
+  </div>
+
+  <!-- ИГРА: МИНЫ -->
   <div id="minesScreen" class="screen">
     <div class="screen-header">
       <div class="btn-back" onclick="closeGame('minesScreen')">‹</div>
@@ -485,7 +539,7 @@
 </div>
 
 <script>
-  // TELEGRAM SDK И ИНИЦИАЛИЗАЦИЯ
+  // TELEGRAM SDK
   const tg = window.Telegram.WebApp;
   tg.expand();
 
@@ -517,7 +571,6 @@
     localStorage.setItem('user_balance', balance);
   }
 
-  // УПРАВЛЕНИЕ ОКТАМИ/ЭКРАНАМИ
   function openGame(id) {
     haptic('light');
     document.getElementById(id).classList.add('active');
@@ -529,7 +582,80 @@
     document.getElementById(id).classList.remove('active');
   }
 
-  // ЛОГИКА МИН
+  // --- ИГРА: САМОЛЁТИК (CRASH) ---
+  let planeTimer = null;
+  let planeMult = 1.0;
+  let planeCrashPoint = 0;
+  let planeBetVal = 0;
+  let planeActive = false;
+
+  function startPlane() {
+    const bet = Number(document.getElementById('planeBet').value);
+    if (bet > balance || bet <= 0) {
+      haptic('error');
+      showToast('❌ Недостаточно очков!');
+      return;
+    }
+
+    haptic('success');
+    balance -= bet;
+    planeBetVal = bet;
+    updateBalanceDisplay();
+
+    planeMult = 1.0;
+    // Определение точки краша
+    planeCrashPoint = (Math.random() * 3 + 1.1).toFixed(2);
+    planeActive = true;
+
+    document.getElementById('btnStartPlane').style.display = 'none';
+    document.getElementById('btnCashoutPlane').style.display = 'block';
+    
+    const multText = document.getElementById('planeMult');
+    const img = document.getElementById('planeImg');
+    multText.classList.remove('plane-crashed');
+    img.style.left = '20px';
+    img.style.bottom = '20px';
+
+    planeTimer = setInterval(() => {
+      planeMult += 0.03;
+      multText.innerText = planeMult.toFixed(2) + 'x';
+      document.getElementById('planeWin').innerText = Math.floor(planeBetVal * planeMult);
+
+      // Анимация полета
+      img.style.left = Math.min(200, 20 + planeMult * 40) + 'px';
+      img.style.bottom = Math.min(140, 20 + planeMult * 25) + 'px';
+
+      if (planeMult >= planeCrashPoint) {
+        clearInterval(planeTimer);
+        planeActive = false;
+        haptic('error');
+        multText.innerText = '💥 ' + planeCrashPoint + 'x';
+        multText.classList.add('plane-crashed');
+        showToast('💥 Самолётик улетел!');
+        resetPlaneControls();
+      }
+    }, 100);
+  }
+
+  function cashoutPlane() {
+    if (!planeActive) return;
+    clearInterval(planeTimer);
+    planeActive = false;
+
+    const win = Math.floor(planeBetVal * planeMult);
+    balance += win;
+    updateBalanceDisplay();
+    haptic('success');
+    showToast(`🎉 Вы забрали +${win} 🪙!`);
+    resetPlaneControls();
+  }
+
+  function resetPlaneControls() {
+    document.getElementById('btnStartPlane').style.display = 'block';
+    document.getElementById('btnCashoutPlane').style.display = 'none';
+  }
+
+  // --- ИГРА: МИНЫ ---
   let minesArray = [];
   let currentBet = 0;
   let currentMinesCount = 3;
@@ -563,7 +689,6 @@
     currentMinesCount = minesInput;
     openedSafeCells = 0;
     gameInProgress = true;
-
     updateBalanceDisplay();
 
     minesArray = Array(25).fill(false);

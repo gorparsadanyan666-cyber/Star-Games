@@ -4,17 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Random Games Clone</title>
-  <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
-      --bg-color: #0b0e14;
-      --card-bg: #161b26;
+      --bg-color: #0b0d14;
+      --card-bg: rgba(22, 27, 38, 0.7);
       --accent-yellow: #ffd43b;
-      --accent-green: #25c974;
-      --accent-red: #ff4757;
-      --text-muted: #7e8b9b;
+      --accent-green: #2ecc71;
+      --accent-red: #e74c3c;
+      --text-muted: #808d9e;
       --border-color: rgba(255, 255, 255, 0.08);
+      --glass-bg: rgba(18, 24, 38, 0.85);
     }
 
     * {
@@ -29,21 +29,27 @@
     body {
       background-color: var(--bg-color);
       color: #ffffff;
-      padding-bottom: 80px;
+      padding-bottom: 85px;
+      overflow-x: hidden;
     }
 
     .app {
       max-width: 480px;
       margin: 0 auto;
+      position: relative;
     }
 
-    /* Шапка с профилем и балансом */
+    /* --- ВЕРХНЯЯ ПАНЕЛЬ --- */
     .header {
-      padding: 16px;
+      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #11151f;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
       border-bottom: 1px solid var(--border-color);
     }
 
@@ -54,26 +60,29 @@
     }
 
     .user-avatar {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       background: linear-gradient(135deg, #ffd43b, #ff922b);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
-      color: #000;
+      font-weight: 800;
+      color: #111;
+      font-size: 18px;
+      box-shadow: 0 0 12px rgba(255, 212, 59, 0.2);
     }
 
     .user-name {
       font-size: 14px;
       font-weight: 700;
+      color: #fff;
     }
 
     .balance-box {
-      background: #1c2333;
-      padding: 8px 14px;
-      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 12px;
+      border-radius: 14px;
       border: 1px solid var(--border-color);
       display: flex;
       align-items: center;
@@ -87,35 +96,37 @@
     }
 
     .btn-deposit {
-      background: var(--accent-yellow);
+      background: linear-gradient(135deg, #ffd43b, #ffa900);
       border: none;
       border-radius: 8px;
-      padding: 4px 8px;
-      font-weight: bold;
+      padding: 5px 10px;
+      font-weight: 800;
       font-size: 12px;
       color: #000;
       cursor: pointer;
+      box-shadow: 0 2px 8px rgba(255, 212, 59, 0.3);
     }
 
-    /* Верхний баннер аккаунта */
+    /* --- БАННЕР --- */
     .promo-banner {
-      margin: 12px 16px;
-      padding: 14px;
-      background: linear-gradient(90deg, #ff922b, #ffd43b);
-      border-radius: 16px;
-      color: #000;
+      margin: 14px 16px;
+      padding: 16px;
+      background: linear-gradient(135deg, #ffd43b 0%, #ff8c00 100%);
+      border-radius: 20px;
+      color: #111;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-weight: bold;
-      font-size: 13px;
+      font-weight: 800;
+      font-size: 14px;
+      box-shadow: 0 6px 20px rgba(255, 140, 0, 0.25);
     }
 
-    /* Сетка игр (Как на скриншоте 3х3) */
+    /* --- СЕТКА ИГР В СТИЛЕ RANDOM GAMES --- */
     .games-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap: 12px;
       padding: 0 16px;
     }
 
@@ -123,60 +134,72 @@
       position: relative;
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 18px;
-      aspect-ratio: 1 / 1.25;
+      border-radius: 20px;
+      aspect-ratio: 1 / 1.3;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: center;
-      padding: 10px;
+      padding: 12px 6px;
       overflow: hidden;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform 0.1s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      transition: all 0.15s ease;
+      backdrop-filter: blur(5px);
     }
 
     .game-card:active {
-      transform: scale(0.95);
+      transform: scale(0.94);
     }
 
-    .game-card .icon {
-      font-size: 38px;
-      margin-bottom: auto;
-      margin-top: 15px;
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+    .game-card img {
+      position: absolute;
+      top: 12px;
+      width: 65px;
+      height: 65px;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.5));
     }
 
     .game-card .title {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       text-align: center;
       z-index: 2;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     }
 
     .badge {
       position: absolute;
-      top: 6px;
-      right: 6px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(5px);
-      border-radius: 6px;
-      padding: 2px 5px;
+      top: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 2px 6px;
       font-size: 9px;
-      font-weight: bold;
+      font-weight: 800;
       color: var(--accent-yellow);
     }
 
-    /* Нижнее меню */
+    /* Градиенты карточек */
+    .bg-mines { background: linear-gradient(180deg, #1b3d30 0%, #111823 100%); }
+    .bg-rocket { background: linear-gradient(180deg, #4d1c26 0%, #111823 100%); }
+    .bg-slots { background: linear-gradient(180deg, #1f2b4d 0%, #111823 100%); }
+    .bg-gift { background: linear-gradient(180deg, #4a3818 0%, #111823 100%); }
+
+    /* --- НИЖНЯЯ НАВИГАЦИЯ --- */
     .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
       width: min(480px, 100%);
-      height: 65px;
-      background: rgba(17, 21, 31, 0.95);
-      backdrop-filter: blur(10px);
+      height: 70px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
       border-top: 1px solid var(--border-color);
       display: flex;
       justify-content: space-around;
@@ -188,9 +211,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
       color: var(--text-muted);
-      font-size: 10px;
+      font-size: 11px;
+      font-weight: 600;
       cursor: pointer;
     }
 
@@ -199,18 +223,12 @@
     }
 
     .nav-item div {
-      font-size: 20px;
+      font-size: 22px;
     }
 
-    /* Экраны страниц и игр */
-    .page, .screen {
-      display: none;
-    }
-    .page.active, .screen.active {
-      display: block;
-    }
-
+    /* --- ЭКРАН ИГРЫ --- */
     .screen {
+      display: none;
       position: fixed;
       inset: 0;
       background: var(--bg-color);
@@ -219,6 +237,7 @@
       max-width: 480px;
       margin: 0 auto;
     }
+    .screen.active { display: block; }
 
     .screen-header {
       padding: 16px;
@@ -226,20 +245,20 @@
       align-items: center;
       gap: 15px;
       border-bottom: 1px solid var(--border-color);
+      background: var(--glass-bg);
     }
 
     .btn-back {
-      font-size: 24px;
+      font-size: 28px;
       cursor: pointer;
       color: var(--text-muted);
     }
 
-    /* Панель управления ставками */
     .controls {
       background: var(--card-bg);
       margin: 16px;
       padding: 16px;
-      border-radius: 16px;
+      border-radius: 20px;
       border: 1px solid var(--border-color);
     }
 
@@ -251,37 +270,42 @@
       display: block;
       font-size: 11px;
       color: var(--text-muted);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .input-group input {
       width: 100%;
-      padding: 12px;
-      background: #0f131c;
+      padding: 14px;
+      background: rgba(0,0,0,0.3);
       border: 1px solid var(--border-color);
-      border-radius: 10px;
+      border-radius: 12px;
       color: #fff;
       font-weight: bold;
+      font-size: 16px;
     }
 
     .btn-action {
       width: 100%;
-      padding: 14px;
-      border-radius: 12px;
+      padding: 16px;
+      border-radius: 14px;
       border: none;
-      background: var(--accent-yellow);
+      background: linear-gradient(135deg, #ffd43b, #ffa900);
       color: #000;
       font-weight: 900;
-      font-size: 15px;
+      font-size: 16px;
       cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 212, 59, 0.25);
     }
 
     .btn-cashout {
-      background: var(--accent-green) !important;
+      background: linear-gradient(135deg, #2ecc71, #27ae60) !important;
       color: #fff !important;
+      box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3) !important;
     }
 
-    /* Сетка игры MINES */
+    /* СЕТКА "МИНЫ" */
     .mines-board {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -291,63 +315,74 @@
 
     .mine-cell {
       aspect-ratio: 1;
-      background: #1e2638;
-      border-radius: 10px;
+      background: #181f2c;
+      border-radius: 12px;
       border: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      font-size: 24px;
       cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
+    .mine-cell:active { transform: scale(0.9); }
+
     .mine-cell.safe {
-      background: rgba(37, 201, 116, 0.2);
+      background: rgba(46, 204, 113, 0.15);
       border-color: var(--accent-green);
+      animation: pop 0.2s ease;
     }
 
     .mine-cell.bomb {
-      background: rgba(255, 71, 87, 0.2);
+      background: rgba(231, 76, 60, 0.2);
       border-color: var(--accent-red);
+      animation: shake 0.3s ease;
     }
 
-    /* Модальное окно пополнения ⭐ Stars */
-    .modal {
-      display: none;
+    @keyframes pop {
+      0% { transform: scale(0.8); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* --- ВСПОМОГАТЕЛЬНОЕ УВЕДОМЛЕНИЕ (TOAST) --- */
+    .toast {
       position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.8);
+      top: 75px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: rgba(22, 27, 38, 0.95);
+      border: 1px solid var(--border-color);
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 13px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: all 0.3s ease;
+      pointer-events: none;
       z-index: 300;
-      align-items: center;
-      justify-content: center;
+      backdrop-filter: blur(10px);
     }
 
-    .modal-content {
-      background: var(--card-bg);
-      padding: 20px;
-      border-radius: 20px;
-      width: 85%;
-      max-width: 350px;
-      text-align: center;
-      border: 1px solid var(--border-color);
-    }
-
-    .stars-item {
-      background: #0f131c;
-      padding: 12px;
-      border-radius: 12px;
-      margin: 8px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      border: 1px solid var(--border-color);
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
   </style>
 </head>
 <body>
 
 <div class="app">
+
+  <!-- TOAST УВЕДОМЛЕНИЕ -->
+  <div class="toast" id="toast"></div>
 
   <!-- ШАПКА -->
   <div class="header">
@@ -357,52 +392,51 @@
     </div>
     <div class="balance-box">
       <span class="balance-amount" id="balance">10 000 🪙</span>
-      <button class="btn-deposit" onclick="openStarsModal()">+ ⭐</button>
+      <button class="btn-deposit" onclick="showToast('⭐ Пополнение скоро!')">+ ⭐</button>
     </div>
   </div>
 
   <!-- ГЛАВНАЯ СТРАНИЦА -->
-  <div id="homePage" class="page active">
-    
-    <div class="promo-banner">
-      <span>🎁 Забрать ежедневную награду</span>
-      <span style="font-size: 16px;">➔</span>
+  <div id="homePage">
+    <div class="promo-banner" onclick="showToast('🎁 Бонус забран!')">
+      <span>🎁 Забрать ежедневный бонус</span>
+      <span style="font-size: 18px;">➔</span>
     </div>
 
+    <!-- ИГРОВАЯ СЕТКА С ИКОНКАМИ В СТИЛЕ RANDOM GAMES -->
     <div class="games-grid">
-      <div class="game-card" style="background: linear-gradient(180deg, #232c40 0%, #161b26 100%);" onclick="openGame('mines')">
-        <div class="icon">⛏️</div>
+      <div class="game-card bg-mines" onclick="openGame('minesScreen')">
+        <img src="https://cdn-icons-png.flaticon.com/512/3502/3502685.png" alt="Mines">
         <div class="title">Мины</div>
       </div>
       
-      <div class="game-card" style="background: linear-gradient(180deg, #3d232a 0%, #161b26 100%);" onclick="alert('Скоро появится!')">
-        <div class="icon">🚀</div>
+      <div class="game-card bg-rocket" onclick="showToast('🚀 Скоро!')">
+        <img src="https://cdn-icons-png.flaticon.com/512/1356/1356479.png" alt="Rocket">
         <div class="title">Ракетка</div>
       </div>
 
-      <div class="game-card" style="background: linear-gradient(180deg, #203a33 0%, #161b26 100%);" onclick="alert('Скоро появится!')">
-        <div class="icon">🎰</div>
+      <div class="game-card bg-slots" onclick="showToast('🎰 Скоро!')">
+        <img src="https://cdn-icons-png.flaticon.com/512/2618/2618170.png" alt="Slots">
         <div class="title">MineSlot</div>
       </div>
 
-      <div class="game-card" onclick="alert('Скоро появится!')">
+      <div class="game-card bg-gift" onclick="showToast('🧢 Скоро!')">
         <div class="badge">3 активных</div>
-        <div class="icon">🧢</div>
+        <img src="https://cdn-icons-png.flaticon.com/512/3349/3349232.png" alt="Giveaway">
         <div class="title">Розыгрыши</div>
       </div>
 
-      <div class="game-card" onclick="alert('Скоро появится!')">
+      <div class="game-card bg-mines" onclick="showToast('🎁 Скоро!')">
         <div class="badge">x2.5</div>
-        <div class="icon">🎁</div>
-        <div class="title">Дорога подарков</div>
+        <img src="https://cdn-icons-png.flaticon.com/512/4213/4213958.png" alt="Road">
+        <div class="title">Дорога</div>
       </div>
 
-      <div class="game-card" onclick="alert('Скоро появится!')">
-        <div class="icon">🤼</div>
+      <div class="game-card bg-rocket" onclick="showToast('🤼 Скоро!')">
+        <img src="https://cdn-icons-png.flaticon.com/512/2965/2965300.png" alt="UFC">
         <div class="title">UFC</div>
       </div>
     </div>
-
   </div>
 
   <!-- НИЖНЕЕ МЕНЮ -->
@@ -411,15 +445,15 @@
       <div>🏠</div>
       <span>Главная</span>
     </div>
-    <div class="nav-item" onclick="openStarsModal()">
+    <div class="nav-item" onclick="showToast('🏪 Магазин скоро!')">
       <div>⭐</div>
       <span>Магазин</span>
     </div>
-    <div class="nav-item">
+    <div class="nav-item" onclick="showToast('🏆 Лидеры скоро!')">
       <div>🏆</div>
       <span>Лидеры</span>
     </div>
-    <div class="nav-item">
+    <div class="nav-item" onclick="showToast('👤 Профиль скоро!')">
       <div>👤</div>
       <span>Профиль</span>
     </div>
@@ -448,46 +482,19 @@
     <div class="mines-board" id="minesBoard"></div>
   </div>
 
-  <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ ЗВЕЗДАМИ -->
-  <div class="modal" id="starsModal">
-    <div class="modal-content">
-      <h3>Пополнить через ⭐ Stars</h3>
-      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Купите очки за Telegram Stars, чтобы монетизировать приложение.</p>
-
-      <div class="stars-item" onclick="buyStars(10, 1000)">
-        <span>1 000 🪙</span>
-        <strong style="color: var(--accent-yellow);">10 ⭐</strong>
-      </div>
-
-      <div class="stars-item" onclick="buyStars(50, 6000)">
-        <span>6 000 🪙 (+20%)</span>
-        <strong style="color: var(--accent-yellow);">50 ⭐</strong>
-      </div>
-
-      <div class="stars-item" onclick="buyStars(100, 15000)">
-        <span>15 000 🪙 (+50%)</span>
-        <strong style="color: var(--accent-yellow);">100 ⭐</strong>
-      </div>
-
-      <button class="btn-action" style="margin-top: 15px; background: #232c40; color: #fff;" onclick="closeStarsModal()">Закрыть</button>
-    </div>
-  </div>
-
 </div>
 
 <script>
-  // --- TELEGRAM SDK ---
+  // TELEGRAM SDK И ИНИЦИАЛИЗАЦИЯ
   const tg = window.Telegram.WebApp;
   tg.expand();
 
-  // Достаем данные пользователя
   if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
     const user = tg.initDataUnsafe.user;
     document.getElementById('username').innerText = user.first_name;
     document.getElementById('avatar').innerText = user.first_name[0];
   }
 
-  // Функция виброотклика
   function haptic(type = 'light') {
     if (tg.HapticFeedback) {
       if (type === 'error') tg.HapticFeedback.notificationOccurred('error');
@@ -496,54 +503,33 @@
     }
   }
 
-  // --- БАЛАНС ---
+  function showToast(text) {
+    const t = document.getElementById('toast');
+    t.innerText = text;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  // БАЛАНС
   let balance = Number(localStorage.getItem('user_balance')) || 10000;
-  
   function updateBalanceDisplay() {
     document.getElementById('balance').innerText = balance.toLocaleString('ru-RU') + ' 🪙';
     localStorage.setItem('user_balance', balance);
   }
 
-  // --- МОНЕТИЗАЦИЯ TELEGRAM STARS ---
-  function openStarsModal() {
+  // УПРАВЛЕНИЕ ОКТАМИ/ЭКРАНАМИ
+  function openGame(id) {
     haptic('light');
-    document.getElementById('starsModal').style.display = 'flex';
+    document.getElementById(id).classList.add('active');
+    if (id === 'minesScreen') initBlankBoard();
   }
 
-  function closeStarsModal() {
-    document.getElementById('starsModal').style.display = 'none';
-  }
-
-  function buyStars(starsCount, coinsReward) {
-    haptic('success');
-    
-    // Внимание: Чтобы ссылка на счет работала в продакшене,
-    // создайте инвойс через ваш бэкенд на Python/Node.js с помощью BotAPI createInvoiceLink
-    // и передайте полученный url в tg.openInvoice()
-    
-    alert(`Запрос на покупку ${coinsReward} 🪙 за ${starsCount} Stars.\n\n(В рабочей версии здесь вызовется оплатная шторка Telegram)`);
-    
-    // Эмуляция успешного пополнения:
-    balance += coinsReward;
-    updateBalanceDisplay();
-    closeStarsModal();
-  }
-
-  // --- ИГРОВОЙ ЭКРАН ---
-  function openGame(gameId) {
+  function closeGame(id) {
     haptic('light');
-    if (gameId === 'mines') {
-      document.getElementById('minesScreen').classList.add('active');
-      initBlankBoard();
-    }
+    document.getElementById(id).classList.remove('active');
   }
 
-  function closeGame(screenId) {
-    haptic('light');
-    document.getElementById(screenId).classList.remove('active');
-  }
-
-  // --- ЛОГИКА ИГРЫ "МИНЫ" ---
+  // ЛОГИКА МИН
   let minesArray = [];
   let currentBet = 0;
   let currentMinesCount = 3;
@@ -567,7 +553,7 @@
 
     if (betInput > balance || betInput <= 0) {
       haptic('error');
-      alert('Недостаточно очков для ставки!');
+      showToast('❌ Недостаточно очков!');
       return;
     }
 
@@ -580,7 +566,6 @@
 
     updateBalanceDisplay();
 
-    // Генерация мин
     minesArray = Array(25).fill(false);
     let placed = 0;
     while (placed < currentMinesCount) {
@@ -591,10 +576,8 @@
       }
     }
 
-    // Отрисовка интерактивной доски
     const board = document.getElementById('minesBoard');
     board.innerHTML = '';
-
     for (let i = 0; i < 25; i++) {
       const cell = document.createElement('div');
       cell.className = 'mine-cell';
@@ -609,7 +592,6 @@
   }
 
   function calculateMultiplier() {
-    // Формула расчета коэффициента
     let mult = 1.0;
     for (let i = 0; i < openedSafeCells; i++) {
       mult *= (25 - i) / (25 - currentMinesCount - i);
@@ -626,25 +608,20 @@
     if (!gameInProgress || cell.classList.contains('safe') || cell.classList.contains('bomb')) return;
 
     if (minesArray[index]) {
-      // Игрок наступил на мину (Проигрыш)
       haptic('error');
       cell.classList.add('bomb');
       cell.innerText = '💣';
       gameInProgress = false;
-      alert('💥 Взрыв! Ставка сгорела.');
+      showToast('💥 Увы, взрыв!');
       resetGameControls();
     } else {
-      // Безопасная клетка
       haptic('light');
       cell.classList.add('safe');
       cell.innerText = '💎';
       openedSafeCells++;
       updateWinAmount();
 
-      // Если открыл все безопасные клетки
-      if (openedSafeCells === 25 - currentMinesCount) {
-        cashoutMines();
-      }
+      if (openedSafeCells === 25 - currentMinesCount) cashoutMines();
     }
   }
 
@@ -655,9 +632,9 @@
     const win = Math.floor(currentBet * calculateMultiplier());
     balance += win;
     gameInProgress = false;
-    
+
     updateBalanceDisplay();
-    alert(`🎉 Вы успешно забрали +${win} 🪙!`);
+    showToast(`🎉 Выиграно +${win} 🪙!`);
     resetGameControls();
   }
 
@@ -666,7 +643,6 @@
     document.getElementById('btnCashoutMines').style.display = 'none';
   }
 
-  // Старт
   updateBalanceDisplay();
 </script>
 
